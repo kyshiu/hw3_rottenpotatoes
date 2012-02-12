@@ -23,7 +23,14 @@ Background: movies have been added to database
 
 Scenario: sort movies alphabetically
   # your steps here
+  When I check the following ratings: G PG PG-13 NC-17 R
+  And I press "ratings_submit"
+  And I follow "title_header"
+  Then I should see the following movies in this order: 2001: A Space Odyssey, Aladdin, Amelie, Chicken Run, Chocolat, Raiders of the Lost Ark, The Help, The Incredibles, The Terminator, When Harry Met Sally
 
 Scenario: sort movies in increasing order of release date
   # your steps here
-
+  When I check the following ratings: G PG PG-13 NC-17 R
+  And I press "ratings_submit"
+  And I follow "release_date_header"
+  Then I should see the following movies in this order: 2001: A Space Odyssey, Raiders of the Lost Ark, The Terminator, When Harry Met Sally, Aladdin, Chicken Run, Chocolat, Amelie, The Incredibles, The Help

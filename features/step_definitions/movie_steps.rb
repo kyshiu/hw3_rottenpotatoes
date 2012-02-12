@@ -8,11 +8,6 @@ Given /the following movies exist/ do |movies_table|
     puts movie
     m = Movie.new(:title=>movie["title"], :rating=>movie["rating"], :release_date=>movie["release_date"])
     test = m.save
-    if test
-      puts "success"
-    else
-      puts "no"
-    end
   end
 end
 
@@ -22,12 +17,16 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.content  is the entire content of the page as a string.
-  matchPattern = /.*#{e1}.*#{e2}/
-  page.body.should =~ matchPattern
+  #matchPattern = /.*#{e1}.*#{e2}/
+  matchPattern1 = /#{e1}/
+  matchPattern2 = /#{e2}/
+  wholePage = page.body
+  restOfPage = wholePage[wholePage=~matchPattern1..-1]
+  restOfPage.should =~ matchPattern2
 end
 
 Then /I should see the following movies in this order: (.*)/ do |movies_list|
-  m_list = movies_list.split(',')
+  mlist = movies_list.split(',')
   for i in 0..mlist.length-2
     step %Q{I should see "#{mlist[i]}" before "#{mlist[i+1]}"}
   end
